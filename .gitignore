@@ -5,3 +5,4 @@ coverage
 .audit.json
 telemetry-*.log
 mochawesome-report
+.env

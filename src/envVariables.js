@@ -18,6 +18,8 @@ const envVariables = {
     contactPoints: (process.env.telemetry_cassandra_contactpoints || 'localhost').split(','),
     cassandraTtl: process.env.telemetry_cassandra_ttl,
     port: process.env.telemetry_service_port || 9001,
-    threads: process.env.telemetry_service_threads || os.cpus().length
+    threads: process.env.telemetry_service_threads || os.cpus().length,
+    pushToTopic: process.env.push_to_kafka_topic,
+    pushToCassandra: process.env.push_to_cassandra,
 }
 module.exports = envVariables;

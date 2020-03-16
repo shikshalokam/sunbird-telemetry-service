@@ -17,21 +17,31 @@ class Dispatcher {
         if (!options) throw new Error('Dispatcher options are required');
         this.logger = new(winston.Logger)({level: 'info'});
         this.options = options;
-        if (this.options.dispatcher == 'kafka') {
+        // if (this.options.dispatcher == 'kafka') {
+        //     this.logger.add(winston.transports.Kafka, this.options);
+        //     console.log('Kafka transport enabled !!!');
+        // } else if (this.options.dispatcher == 'file') {
+        //     const config = Object.assign(defaultFileOptions, this.options);
+        //     this.logger.add(winston.transports.DailyRotateFile, config);
+        //     console.log('File transport enabled !!!');
+        // } else if (this.options.dispatcher === 'cassandra') {
+         //     this.logger.add(winston.transports.Cassandra, this.options);
+         //     console.log('Cassandra transport enabled !!!');
+        //  } else { // Log to console
+        //     this.options.dispatcher = 'console'
+        //     const config = Object.assign({json: true,stringify: (obj) => JSON.stringify(obj)}, this.options);
+        //     this.logger.add(winston.transports.Console, config);
+        //     console.log('Console transport enabled !!!');
+        // }
+
+        if (this.options.pushToTopic == 'true') {
             this.logger.add(winston.transports.Kafka, this.options);
             console.log('Kafka transport enabled !!!');
-        } else if (this.options.dispatcher == 'file') {
-            const config = Object.assign(defaultFileOptions, this.options);
-            this.logger.add(winston.transports.DailyRotateFile, config);
-            console.log('File transport enabled !!!');
-        } else if (this.options.dispatcher === 'cassandra') {
+        }
+
+        if (this.options.pushToCassandra == 'true') {
             this.logger.add(winston.transports.Cassandra, this.options);
             console.log('Cassandra transport enabled !!!');
-        } else { // Log to console
-            this.options.dispatcher = 'console'
-            const config = Object.assign({json: true,stringify: (obj) => JSON.stringify(obj)}, this.options);
-            this.logger.add(winston.transports.Console, config);
-            console.log('Console transport enabled !!!');
         }
     }
 
