@@ -6,7 +6,8 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   envVariables = require('./envVariables'),
   port = envVariables.port,
-  threads = envVariables.threads;
+  threads = envVariables.threads,
+  routes = require('./routes');
 
   const createAppServer = () => {
     const app = express();
@@ -22,7 +23,15 @@ const express = require('express'),
     app.use(express.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
-    app.use('/', require('./routes'));
+    
+    //app.use('/', require('./routes'));
+
+    if(process.env.base_service_url){
+      app.use(process.env.base_service_url, routes);
+    } else {
+      app.use('/telemetry',routes);
+    }
+    
     module.exports = app;
     return app;
   }
